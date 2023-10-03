@@ -1,41 +1,45 @@
 import { Router } from 'express';
-import path from 'path';
 import __dirname from "../utils.js";
-import PM from '../../productManager.js';
-import productModel from '../models/products.models.js';
-
-const productsFile = '../products.json';
-
-let pm = new PM.ProductManager(path.resolve(__dirname, productsFile));
+import {productModel} from '../models/products.models.js';
 
 const productRouter = Router();
 
-productRouter.get('/', (req, res) => {
-    let { limit } = req.query;
+productRouter.get('/', async (req, res) => {
+    let { limit, page, sort, query } = req.query;
+    console.log(query);
+    console.log(req.query);
     try {
         //let products = pm.getProducts();
-        let products = productModel.find().limit(limit);
+        let products
+        products = await productModel.paginate(query?{category:query}:{},{limit:limit,page:page,sort:{price:sort}});
+        /* if (query) {
+                products = await productModel.paginate({category:query},{limit:limit,page:page,sort:{price:sort}});
+            }
+        else {
+            products = await productModel.paginate({}, { limit: limit ,page: page,sort:{price:sort}});
+        } */
+        //console.log(products);
         res.status(200).send(products)
     } catch (error) {
         res.status(400).send({ error: `Error al consultar productos: ${error.message}` });
     }
 });
 
-productRouter.get('/:pid', (req, res) => {
+productRouter.get('/:pid', async (req, res) => {
     const { pid } = req.params;
     try {
         //let products = pm.getProducts();
-        const product = productModel.findById(pid);
+        const product = await productModel.findById(pid);
         product ? res.status(200).send(product) : res.status(404).send({ error: `No se encontró el producto ${pid}` });
     } catch (error) {
         res.status(400).send({ error: `Error al consultar el producto ${pid}: ${error.message}` });
     }
 });
 
-productRouter.post('/', (req, res) => {
+productRouter.post('/', async (req, res) => {
     const { title, description, stock, code, price, category } = req.body;
     try {
-        const product = productModel.create({
+        const product = await productModel.create({
             title, description, stock, code, price, category
         });
         res.status(200).send({ resultado: 'OK', message: product })
@@ -45,11 +49,11 @@ productRouter.post('/', (req, res) => {
 });
 
 
-productRouter.put('/:pid', (req, res) => {
+productRouter.put('/:pid', async (req, res) => {
     const { pid } = req.params;
     const { title, description, stock, code, price, category } = req.body;
     try {
-        const respuesta = productModel.findByIdAndUpdate(pid, {
+        const respuesta = await productModel.findByIdAndUpdate(pid, {
             title, description, stock, code, price, category
         });
         respuesta ? res.status(200).send({ resultado: 'OK', message: respuesta }) : res.status(404).send({ error: `No se encontró el producto ${pid}` });

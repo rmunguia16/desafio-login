@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import paginate from 'mongoose-paginate-v2';
 
-const messageSchema = new Schema({
+const productSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -20,6 +21,7 @@ const messageSchema = new Schema({
     category: {
         type:String,
         required: true,
+        index: true
 },
     status: {
         type:Boolean,
@@ -32,5 +34,6 @@ const messageSchema = new Schema({
     thumbnail: []
 });
 
-const productModel = model('products', messageSchema);
-export default productModel;
+productSchema.plugin(paginate);
+
+export const productModel = model('products', productSchema);

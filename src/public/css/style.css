@@ -1,24 +1,15 @@
-html, body {
+/* html, body {
     height: 100%;
-  }
+  } */
 
-.container{
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 8fr 1fr;
+body{
+    margin: 0;
 }
 
-.nav{
-    display: flex;
-    grid-row: 1/2;
-    justify-content: center;
-    position: absolute;
-    top: 0%;
-    display: flex;
-    width:98vw;
-    border: 0.5rem;
-    border-style: dashed;
-    border-color: #04AA6D;
+.container{
+    height: 80vh;
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
 }
 
 .main {
@@ -54,11 +45,9 @@ html, body {
     display: flex;
     justify-content: center;
     grid-row: 9/10;
-    /*
     position: absolute;
+    width: 100vw;
     bottom: 0;
-    */
-    width: 98vw;
     border: 0.5rem;
     border-style: dashed;
     border-color: #04AA6D;

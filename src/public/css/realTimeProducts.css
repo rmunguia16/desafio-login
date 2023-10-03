@@ -1,28 +1,16 @@
 html, body {
     height: 100%;
+    margin: 0;
   }
 
 .container{
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 8fr 1fr;
-}
-
-.nav{
-    display: flex;
-    grid-row: 1/2;
-    justify-content: center;
-    position: absolute;
-    top: 0%;
-    display: flex;
-    width:98vw;
-    border: 0.5rem;
-    border-style: dashed;
-    border-color: #04AA6D;
+    min-height: 95%;
+    display: grid;/* 
+    grid-template-rows: 1fr 8fr 1fr; */
 }
 
 .main {
-    grid-row: 2/9;
+    grid-row: 2/10;
     display: flex;
     flex-wrap: wrap;
     /*position: absolute;
@@ -34,7 +22,7 @@ html, body {
 .footer{
     display: flex;
     justify-content: center;
-    grid-row: 9/10;
+    grid-row: 10/11;
     width: 98vw;
     border: 0.5rem;
     border-style: dashed;
